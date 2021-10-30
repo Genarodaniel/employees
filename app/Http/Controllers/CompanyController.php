@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Repositories\CompanyRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Flash;
 use Response;
 
@@ -29,7 +30,7 @@ class CompanyController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $companies = $this->companyRepository->all();
+        $companies = $this->companyRepository->all(['user_id' => Auth::user()->id]);
 
         return view('companies.index')
             ->with('companies', $companies);
@@ -77,7 +78,7 @@ class CompanyController extends AppBaseController
     {
         $company = $this->companyRepository->find($id);
 
-        if (empty($company)) {
+        if (empty($company) || !empty($company->user_id) && $company->user_id != Auth::user()->id) {
             Flash::error('Company not found');
 
             return redirect(route('companies.index'));
@@ -97,7 +98,7 @@ class CompanyController extends AppBaseController
     {
         $company = $this->companyRepository->find($id);
 
-        if (empty($company)) {
+        if (empty($company) || !empty($company->user_id) && $company->user_id != Auth::user()->id) {
             Flash::error('Company not found');
 
             return redirect(route('companies.index'));
@@ -118,7 +119,7 @@ class CompanyController extends AppBaseController
     {
         $company = $this->companyRepository->find($id);
 
-        if (empty($company)) {
+        if (empty($company) || !empty($company->user_id) && $company->user_id != Auth::user()->id) {
             Flash::error('Company not found');
 
             return redirect(route('companies.index'));
@@ -148,7 +149,7 @@ class CompanyController extends AppBaseController
     {
         $company = $this->companyRepository->find($id);
 
-        if (empty($company)) {
+        if (empty($company) || !empty($company->user_id) && $company->user_id != Auth::user()->id) {
             Flash::error('Company not found');
 
             return redirect(route('companies.index'));
