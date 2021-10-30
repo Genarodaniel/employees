@@ -19,8 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/getZipCode',[App\Http\Controllers\ZipCodeController::class,'getAddress'])->name('getAddress');
+
+// Route::get('*/getZipCode',[App\Http\Controllers\ZipCodeController::class,'getAddress'])->name('getAddress');
+
 Auth::routes();
 
 Route::get('/home', [
     HomeController::class, 'index'
 ])->name('home');
+
+
+Route::resource('companies', App\Http\Controllers\CompanyController::class);
