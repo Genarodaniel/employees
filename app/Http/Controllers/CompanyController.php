@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Repositories\CompanyRepository;
+use App\Repositories\EmployeeRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,10 @@ class CompanyController extends AppBaseController
     /** @var  CompanyRepository */
     private $companyRepository;
 
-    public function __construct(CompanyRepository $companyRepo)
+    public function __construct(CompanyRepository $companyRepo, EmployeeRepository $employeesRepo)
     {
         $this->companyRepository = $companyRepo;
+        $this->employeesRepository = $employeesRepo;
     }
 
     /**
@@ -77,14 +79,14 @@ class CompanyController extends AppBaseController
     public function show($id)
     {
         $company = $this->companyRepository->find($id);
-
+        $employees = $company->employees()->get();
         if (empty($company) || !empty($company->user_id) && $company->user_id != Auth::user()->id) {
             Flash::error('Company not found');
 
             return redirect(route('companies.index'));
         }
 
-        return view('companies.show')->with('company', $company);
+        return view('companies.show')->with(compact('company','employees'));
     }
 
     /**

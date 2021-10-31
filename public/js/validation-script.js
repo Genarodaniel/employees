@@ -97,9 +97,15 @@ $(document).ready(function ($) {
   $("#zipCode").mask("99999-999");
   $('#phone').mask("(99) 9999-9999?9");
 
-  if ($('#zipCode').val().replace(/[^\d]*/gi, '').length == 8) {
+  if ($('#zipCode').length && $('#zipCode').val().replace(/[^\d]*/gi, '').length == 8) {
     showFields();
   }
+
+  $("#wage").maskMoney({
+    decimal: ",",
+    thousands: ".",
+    precision: 0
+  });
 });
 $('#zipCode').on('keyup', function () {
   if ($('#zipCode').val().replace(/[^\d]*/gi, '').length == 8) {

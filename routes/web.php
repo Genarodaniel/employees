@@ -31,3 +31,5 @@ Route::get('/home', [
 
 
 Route::resource('companies', App\Http\Controllers\CompanyController::class);
+
+Route::resource('employees', App\Http\Controllers\EmployeeController::class);

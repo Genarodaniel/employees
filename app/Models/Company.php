@@ -98,4 +98,9 @@ class Company extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
+
+    public function employees()
+    {
+        return $this->hasMany(\App\Models\Employee::class,'company_id');
+    }
 }
