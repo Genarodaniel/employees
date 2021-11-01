@@ -62,7 +62,7 @@ class Employee extends Model
         'name' => 'required|string|max:200',
         'company_id' => 'nullable',
         'position' => 'required|string',
-        'wage' => 'required|numeric',
+        'wage' => 'required|string',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
