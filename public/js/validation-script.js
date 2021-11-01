@@ -104,7 +104,7 @@ $(document).ready(function ($) {
   $("#wage").maskMoney({
     decimal: ",",
     thousands: ".",
-    precision: 0
+    precision: 2
   });
 });
 $('#zipCode').on('keyup', function () {

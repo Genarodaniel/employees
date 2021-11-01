@@ -6,7 +6,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
-                       href="{{ route('employees.create',['company_id'=> $company->id]) }}">
+                       href="{{ route('employees.create',['company_id'=> !empty($company->id) ? $company->id : '']) }}">
                         Add New
                     </a>
                 </div>

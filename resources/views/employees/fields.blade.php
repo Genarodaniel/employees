@@ -19,7 +19,7 @@
 <!-- Wage Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('wage', 'Wage:') !!}
-    {!! Form::number('wage', null, ['class' => 'form-control']) !!}
+    {!! Form::text('wage', !empty($employee->wage) ? str_replace('.',',',$employee->wage) : null, ['class' => 'form-control']) !!}
 </div>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">

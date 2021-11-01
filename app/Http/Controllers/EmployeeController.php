@@ -59,8 +59,9 @@ class EmployeeController extends AppBaseController
     {
         $input = $request->all();
 
-        $employees = $this->employeeRepository->create($input)->get();
-        $company = $this->employeeRepository->find($input['company_id']);
+        $this->employeeRepository->create($input);
+        $company = $this->companyRepository->find($input['company_id']);
+        $employees = $company->employees()->get();
         Flash::success('Employee saved successfully.');
 
         return view('companies.show')->with(compact('company','employees'));
@@ -76,14 +77,15 @@ class EmployeeController extends AppBaseController
     public function show($id)
     {
         $employee = $this->employeeRepository->find($id);
-
         if (empty($employee)) {
             Flash::error('Employee not found');
 
             return redirect(route('employees.index'));
         }
 
-        return view('employees.show')->with('employee', $employee);
+        $company = $this->companyRepository->find($employee->company_id);
+
+        return view('employees.show')->with(compact('employee','company'));
     }
 
     /**
@@ -102,8 +104,10 @@ class EmployeeController extends AppBaseController
 
             return redirect(route('employees.index'));
         }
+        $employee->wage = (float)str_replace('.',',',$employee->wage);
+        $company = $this->companyRepository->find($employee->company_id);
 
-        return view('employees.edit')->with('employee', $employee);
+        return view('employees.edit')->with(compact('employee','company'));
     }
 
     /**
@@ -124,11 +128,13 @@ class EmployeeController extends AppBaseController
             return redirect(route('employees.index'));
         }
 
+        $company = $this->companyRepository->find($employee->company_id);
         $employee = $this->employeeRepository->update($request->all(), $id);
+        $employees = $this->employeeRepository->all(['company_id' => $employee->company_id]);
 
         Flash::success('Employee updated successfully.');
 
-        return redirect(route('employees.index'));
+        return view('companies.show')->with(compact('company','employees'));
     }
 
     /**
@@ -150,10 +156,12 @@ class EmployeeController extends AppBaseController
             return redirect(route('employees.index'));
         }
 
+        $company = $this->companyRepository->find($employee->company_id);
         $this->employeeRepository->delete($id);
+        $employees = $this->employeeRepository->all(['company_id' => $employee->company_id]);
 
         Flash::success('Employee deleted successfully.');
 
-        return redirect(route('employees.index'));
+        return view('companies.show')->with(compact('company','employees'));
     }
 }

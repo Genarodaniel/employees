@@ -22,3 +22,9 @@
     <p>{{ $employee->wage }}</p>
 </div>
 
+<!-- Wage Field -->
+<div class="col-sm-12">
+    {!! Form::label('company_name', 'Company Name:') !!}
+    <p>{{ $company->name }}</p>
+</div>
+

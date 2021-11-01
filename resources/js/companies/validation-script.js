@@ -5,7 +5,7 @@ $(document).ready(function($){
         showFields();
     }
 
-    $("#wage").maskMoney({decimal:",", thousands:".",precision: 0});
+    $("#wage").maskMoney({decimal:",", thousands:".",precision: 2});
 });
 
 $('#zipCode').on('keyup',function(){

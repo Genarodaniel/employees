@@ -14,7 +14,7 @@
             <tr>
             <td>{{ $employee->name }}</td>
             <td>{{ $employee->position }}</td>
-            <td>{{ $employee->wage }}</td>
+            <td>R$ {{ number_format($employee->wage, 2, ',', '.') }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['employees.destroy', $employee->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

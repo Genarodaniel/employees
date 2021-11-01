@@ -16,7 +16,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 Route::get('/getZipCode',[App\Http\Controllers\ZipCodeController::class,'getAddress'])->name('getAddress');
