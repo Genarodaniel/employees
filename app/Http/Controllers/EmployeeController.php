@@ -58,7 +58,7 @@ class EmployeeController extends AppBaseController
     public function store(CreateEmployeeRequest $request)
     {
         $input = $request->all();
-
+        $input['wage'] = (float)str_replace(',','.',str_replace('.','', $input['wage']));
         $this->employeeRepository->create($input);
         $company = $this->companyRepository->find($input['company_id']);
         $employees = $company->employees()->get();
@@ -129,7 +129,11 @@ class EmployeeController extends AppBaseController
         }
 
         $company = $this->companyRepository->find($employee->company_id);
-        $employee = $this->employeeRepository->update($request->all(), $id);
+
+        $input = $request->all();
+        $input['wage'] = (float)str_replace(',','.',str_replace('.','', $input['wage']));
+
+        $employee = $this->employeeRepository->update($input, $id);
         $employees = $this->employeeRepository->all(['company_id' => $employee->company_id]);
 
         Flash::success('Employee updated successfully.');
