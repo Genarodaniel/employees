@@ -1,4 +1,4 @@
-# Passos para executar aplicação 2
+# Passos para executar aplicação
 
 ----------
 
