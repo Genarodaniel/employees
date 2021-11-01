@@ -23,13 +23,14 @@
 
         <div class="clearfix"></div>
 
+        @include('companies.search')
         <div class="card">
             <div class="card-body p-0">
                 @include('companies.table')
 
                 <div class="card-footer clearfix float-right">
                     <div class="float-right">
-                        
+
                     </div>
                 </div>
             </div>

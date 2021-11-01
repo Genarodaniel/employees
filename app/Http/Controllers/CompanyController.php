@@ -32,7 +32,11 @@ class CompanyController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $companies = $this->companyRepository->all(['user_id' => Auth::user()->id]);
+        if(!empty($request->input('term'))){
+            $companies = $this->companyRepository->all(['user_id' => Auth::user()->id])->where('name', 'LIKE', $request->input('term'));
+        }else{
+            $companies = $this->companyRepository->all(['user_id' => Auth::user()->id]);
+        }
 
         return view('companies.index')
             ->with('companies', $companies);
@@ -76,10 +80,16 @@ class CompanyController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $company = $this->companyRepository->find($id);
-        $employees = $company->employees()->get();
+
+        if(!empty($request->input('term'))){
+            $employees = $this->employeesRepository->all(['company_id' => $id, 'name' => $request->input('term')]);
+        }else{
+            $employees = $company->employees()->get();
+        }
+
         if (empty($company) || !empty($company->user_id) && $company->user_id != Auth::user()->id) {
             Flash::error('Company not found');
 
