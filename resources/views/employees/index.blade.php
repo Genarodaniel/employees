@@ -20,6 +20,7 @@
 
         <div class="clearfix"></div>
 
+        @include('employees.search')
         <div class="card">
             <div class="card-body p-0">
                 @include('employees.table')

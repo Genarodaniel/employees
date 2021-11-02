@@ -32,8 +32,8 @@ class CompanyController extends AppBaseController
      */
     public function index(Request $request)
     {
-        if(!empty($request->input('term'))){
-            $companies = $this->companyRepository->all(['user_id' => Auth::user()->id])->where('name', 'LIKE', $request->input('term'));
+        if(!empty($request->input('name'))){
+            $companies = $this->companyRepository->all(['user_id' => Auth::user()->id])->where('name', 'LIKE', $request->input('name'));
         }else{
             $companies = $this->companyRepository->all(['user_id' => Auth::user()->id]);
         }
@@ -84,8 +84,8 @@ class CompanyController extends AppBaseController
     {
         $company = $this->companyRepository->find($id);
 
-        if(!empty($request->input('term'))){
-            $employees = $this->employeesRepository->all(['company_id' => $id, 'name' => $request->input('term')]);
+        if(!empty($request->input('name'))){
+            $employees = $this->employeesRepository->all(['company_id' => $id, 'name' => $request->input('name')]);
         }else{
             $employees = $company->employees()->get();
         }

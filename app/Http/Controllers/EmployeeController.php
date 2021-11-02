@@ -64,7 +64,7 @@ class EmployeeController extends AppBaseController
         $employees = $company->employees()->get();
         Flash::success('Employee saved successfully.');
 
-        return view('companies.show')->with(compact('company','employees'));
+        return redirect('companies/'.$input['company_id'])->with(compact('company','employees'));
     }
 
     /**
